@@ -107,3 +107,23 @@ public function run()
 ```
 
 > ### Biblioteca Faker
+
+```bash
+composer require --dev fzaninotto/faker
+```
+
+```php
+use Faker\Factory as Faker;
+
+public function run()
+{
+    $faker = Faker::create();
+
+    foreach (range(1, 10) as $index) {
+        DB::table('products')->insert([
+            'name' => $faker->word,
+            'category_id' => $faker->randomElement($categoryIds),
+        ]);
+    }
+}
+```
