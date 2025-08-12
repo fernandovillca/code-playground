@@ -127,3 +127,113 @@ public function run()
     }
 }
 ```
+
+## Models
+
+> ### Datos rellenables
+
+```php
+class Product extends Model
+{
+    protected $table = 'products'; # Nombre de la tabla en caso sea diferente al nombre que se le dio en la migración
+
+    # Se utiliza para la asignación masiva
+    protected $fillable = [
+        # Solo estos campos pueden ser asignados masivamente
+        'name',
+        'category_id',
+    ];
+}
+```
+
+> ### Relacion entre tablas
+
+```php
+class Product extends Model
+{
+    public function category()
+    {
+        # belongsTo: pertenece a
+        # Relacion uno a uno con categoria
+        # Un producto pertenece a una categoria
+        return $this->belongsTo(Category::class);
+    }
+}
+
+class Category extends Model
+{
+    public function products()
+    {
+        # hasMany: tiene muchos
+        # Relacion uno a muchos con productos
+        # Una categoria tiene muchos productos
+        return $this->hasMany(Product::class);
+    }
+}
+```
+
+## Factories
+
+```bash
+php artisan make:factory CategoryFactory # Crear un nuevo factory
+```
+
+```php
+# app/Models/Category.php
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+class Category extends Model
+{
+    use HasFactory;
+
+    protected $fillable = ['name'];
+}
+
+
+# app/Database/Factories/CategoryFactory.php
+
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class CategoryFactory extends Factory
+{
+    protected $model = Category::class;
+
+    public function definition()
+    {
+        return [
+            'name' => $this->faker->word,
+        ];
+    }
+}
+```
+
+> ### Ejecutar una factory
+
+```php
+# app/Database/Seeders/DatabaseSeeder.php
+
+public function run()
+{
+    Category::factory(10)->create();
+}
+```
+
+> ### factory con realciones
+
+```php
+# app/Database/Factories/ProductFactory.php
+
+class ProductFactory extends Factory
+{
+    protected $model = Product::class;
+
+    public function definition()
+    {
+        return [
+            'name' => $this->faker->word,
+            'category_id' => Category::factory(),
+        ];
+    }
+}
+```
