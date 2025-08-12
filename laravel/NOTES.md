@@ -55,3 +55,55 @@ public function down()
     });
 }
 ```
+
+## Seeders
+
+```bash
+php artisan make:seeder UsersTableSeeder # Crear un nuevo seeder
+php artisan db:seed --class=UsersTableSeeder # Ejecutar un seeder específico
+php artisan db:seed # Ejecutar todos los seeders
+php artisan migrate:refresh --seed # Revertir y volver a ejecutar todas las migraciones y seeders
+```
+
+> ### Ejemplo
+
+```php
+# app/Database/Seeders/UsersTableSeeder.php
+
+public function run()
+{
+    DB::table('category')->insert([
+        ['name' => 'Category 1'],
+        ['name' => 'Category 2'],
+        ['name' => 'Category 3'],
+    ]);
+}
+
+# app/Database/Seeders/DatabaseSeeder.php
+
+public function run()
+{
+    $this->call(UsersTableSeeder::class);
+}
+```
+
+> ### Seeder con llave foranea
+
+```php
+# app/Database/Seeders/ProductSeeder.php
+
+public function run()
+{
+    $categoryIds = DB::table("category")
+                        ->pluck("id") # Obtener todos los IDs de las categorías
+                        ->toArray(); # Convertir a un array
+
+    DB::table('products')->insert([
+        ['name' => 'Product 1', 'category_id' => $categoryIds[0]],
+        ['name' => 'Product 2', 'category_id' => $categoryIds[1]],
+        ['name' => 'Product 3', 'category_id' => $categoryIds[2]],
+    ]);
+}
+```
+
+> ### Biblioteca Faker
