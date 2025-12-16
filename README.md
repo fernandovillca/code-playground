@@ -1,4 +1,4 @@
-# 🧪 Code Playground
+# Code Playground
 
 > [Leer en Español (Read in Spanish)](./README.es.md)
 
@@ -8,6 +8,7 @@ This repository contains experiments, practice projects, and exercises that I wo
 
 - `laravel/` → Projects using Laravel and PHP
 - `notes/` → Personal notes and summaries
+- `Nest.js/` → Projects using Nest.js and TypeScript
 
 ## 🛠️ Purpose
 
