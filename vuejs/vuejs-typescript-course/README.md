@@ -9,3 +9,8 @@
     - Componentes Tradicionales
     - Integracion con Tailwind y Boostrap
     - Composables basico
+
+## Proyecto: `chat-app`
+
+    - Comunicacion entre componentes
+    - Emitir eventos (defineEmits)
